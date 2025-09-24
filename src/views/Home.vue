@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
-defineProps<{ msg: string }>()
+import { reactive, ref, computed } from 'vue'
+import Child from '../views/Child.vue';
 
 const count = ref(0)
 
+const double = computed<number>(() => count.value * 2)
 // any
 
 let value1
@@ -13,7 +13,7 @@ value1 = 'ab'
 
 // error
 let value2 = 23
-value2 = 'ad'
+value2 = 50
 
 // js - practice
 
@@ -50,7 +50,7 @@ interface Person {
   [propName: string]: any; // 允許有任意的屬性
 }
 
-let tom: Person = {
+let tom12: Person = {
   name: 'tom',
   age: 25,
 }
@@ -108,11 +108,33 @@ function getLength(something: string | number): number {
 
 // element type
 const input = document.querySelector<HTMLInputElement>('.input')
-input.value
+input?.value
+
+// vue
+
+let strA = ref<string>('sfdsf')
+
+strA.value = 'ad'
+
+function onChange(val: string): void {
+  strA.value = val
+}
+
+interface people {
+  name: string,
+  age: number
+}
+
+const personA = reactive<people>({
+  name: 'tommy',
+  age: 30
+})
+
+
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <Child :foo="strA" @update="onChange" />
   <input type="text">
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
